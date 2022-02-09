@@ -6,9 +6,6 @@ var express = require('express'),
   mongoose = require('mongoose'),
   bodyParser = require('body-parser'),
   cors = require('cors');
-  const passport = require('passport');
-  const FacebookStrategy   = require("passport-facebook").Strategy;
-  const GoogleStrategy = require('passport-google-oauth20').Strategy;
   const multer = require('multer');
   const path = require('path');
 mongoose.Promise = global.Promise;
@@ -21,21 +18,6 @@ mongoose.connect('mongodb://localhost:27017/quiz_app',
 
 app.use(cors({}))
 app.use(bodyParser.json());
-
-//passport 
-passport.use(new FacebookStrategy({
-  clientID: process.env.FB_KEY,
-  clientSecret: process.env.FB_SERCET,
-  callbackURL: "http://localhost:3002/auth/facebook/callback"
-},
-function(accessToken, refreshToken, profile, cb) {
-  console.log('accessToken')
-  // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-  //   return cb(err, user);
-  // });
-  return cb(null,profile)
-}
-));
 
 // 
 const storage = multer.diskStorage({
